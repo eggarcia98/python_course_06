@@ -15,4 +15,7 @@ class TestCalculateTotalPrice(unittest.TestCase):
         expected_total = 0
         self.assertEqual(calculate_total_price(items), expected_total)
 
-  
+ 
+
+if __name__ == '__main__':
+    unittest.main()
