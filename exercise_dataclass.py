@@ -5,8 +5,8 @@ class SortableDictionaryList:
     def append(self, item):
         self._data.append(item)
 
-    def sort(self, key=None, reverse=False):
-        self._data.sort(key=key, reverse=reverse)
+    def sort(self, key="name", reverse=False):
+        self._data.sort(key=lambda x: x[key], reverse=reverse)
 
     def __len__(self):
         return len(self._data)
@@ -69,14 +69,18 @@ def remove_employee(employees):
     else:
         print("Employee not found.")
 
-def sort_employees(employees):
+def sort_employees(employees: SortableDictionaryList):
     if employees.__len__() == 0:
         print("No employees in the system.")
     else:
         parameter = input("Select the parameter on which you want to sort the list: name, age, department or salary (default: name): ")
-        print("Employee details:")
-        for employee in employees._data:
-            print(f" - Name: {employee.get('name')}, Age: {employee.get('age')}, Department: {employee.get('department')}, Salary: {employee.get('salary')}")
+        order = input("Select the order on which you want to sort the list: asc or desc (default: asc): ")
+        
+        parameter = parameter if len(parameter) > 0 else "name"
+        order = True if order == "desc" else False
+        employees.sort(parameter, order)
+        
+        display_employees(employees)
 
     return None
 
@@ -84,8 +88,8 @@ def main():
     employees = SortableDictionaryList()
 
     employees.append({"name": "Erick", "age": 25, "department": "DEVELOP", "salary": 1300})
-    employees.append({"name": "Jahir", "age": 25, "department": "IT", "salary": 2500})
     employees.append({"name": "Karen", "age": 24, "department": "ACCOUNTING", "salary": 2100})
+    employees.append({"name": "Jahir", "age": 25, "department": "IT", "salary": 2500})
 
     print(employees.__len__())
     
