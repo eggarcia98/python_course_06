@@ -6,7 +6,7 @@ class SortableDictionaryList:
         self._data.append(item)
 
     def sort(self, key="name", reverse=False):
-        self._data.sort(key=lambda x: x[key], reverse=reverse)
+        self._data.sort(key=lambda x: getattr(x, key), reverse=reverse)
 
     def __len__(self):
         return len(self._data)
@@ -38,33 +38,38 @@ def display_employees(employees: SortableDictionaryList):
         for employee in employees._data:
             print(f" - Name: {employee.name}, Age: {employee.age}, Department: {employee.department}, Salary: {employee.salary}")
 
-def update_employee(employees):
+def update_employee(employees: SortableDictionaryList):
     name = input("Enter the name of the employee to update: ")
-    found_employee = None
+    found_employee: None or Employee = None
 
-    for employee in employees:
+    for employee in employees._data:
         if employee.name == name:
             found_employee = employee
             break
 
     if found_employee:
-        new_salary = float(input("Enter the new salary: "))
-        found_employee.salary = new_salary
+        new_salary = input("Enter the new salary: (Enter to skip): ")
+        new_age = input("Enter the new age: (Enter to skip): ")
+        new_department = input("Enter the new department: (Enter to skip): ")
+
+        found_employee.salary = float(new_salary) if bool(new_salary) else found_employee.salary
+        found_employee.age =  int(new_age) if bool(new_age) else found_employee.age
+        found_employee.department = new_department if bool(new_department) else found_employee.department
         print("Employee details updated successfully!")
     else:
         print("Employee not found.")
 
-def remove_employee(employees):
+def remove_employee(employees: SortableDictionaryList):
     name = input("Enter the name of the employee to remove: ")
     found_employee = None
 
-    for employee in employees:
+    for employee in employees._data:
         if employee.name == name:
             found_employee = employee
             break
 
     if found_employee:
-        employees.remove(found_employee)
+        employees._data.remove(found_employee)
         print("Employee removed successfully!")
     else:
         print("Employee not found.")
@@ -102,7 +107,7 @@ def main():
         print("5. Remove Employee")
         print("6. Exit")
 
-        choice = input("Enter your choice (1-5): ")
+        choice = input("Enter your choice (1-6): ")
 
         if choice == '1':
             add_employee(employees)
@@ -117,9 +122,9 @@ def main():
         elif choice == '6':
             break
         else:
-            print("Invalid choice. Please try again.")
+            print("Invalid choice. try again.")
 
-    print("Thank you for using the Employee Management System!")
+    print("Thank you for using This Management System!")
 
 if __name__ == '__main__':
     main()
