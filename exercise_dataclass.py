@@ -36,7 +36,7 @@ def display_employees(employees: SortableDictionaryList):
     else:
         print("Employee details:")
         for employee in employees._data:
-            print(f" - Name: {employee.get('name')}, Age: {employee.get('age')}, Department: {employee.get('department')}, Salary: {employee.get('salary')}")
+            print(f" - Name: {employee.name}, Age: {employee.age}, Department: {employee.department}, Salary: {employee.salary}")
 
 def update_employee(employees):
     name = input("Enter the name of the employee to update: ")
@@ -87,9 +87,9 @@ def sort_employees(employees: SortableDictionaryList):
 def main():
     employees = SortableDictionaryList()
 
-    employees.append({"name": "Erick", "age": 25, "department": "DEVELOP", "salary": 1300})
-    employees.append({"name": "Karen", "age": 24, "department": "ACCOUNTING", "salary": 2100})
-    employees.append({"name": "Jahir", "age": 25, "department": "IT", "salary": 2500})
+    employees.append(Employee(name="Erick", age=25, department="DEVELOP", salary=1300))
+    employees.append(Employee(name="Karen", age=24, department="ACCOUNTING", salary=2100))
+    employees.append(Employee(name="Jahir", age=26, department="IT", salary=2500))
 
     print(employees.__len__())
     
